@@ -10,9 +10,6 @@ GIFS_DIR = "./gifs/"
 
 
 def setup_environment():
-    """
-    Create necessary directories for dataset storage, plot output, and GIFs.
-    """
     if not os.path.exists(DATASET_DIR):
         os.makedirs(DATASET_DIR)
         print(f"Created dataset directory: {DATASET_DIR}")
@@ -27,19 +24,12 @@ def setup_environment():
 
 
 def main():
-    """
-    Main entry point for the script.
-    Runs the full benchmarking suite and generates GIF visualizations.
-    """
     print("\n========== B-Tree and AVL Tree Benchmark and Visualization ==========")
 
-    # Ensure necessary directories exist
     setup_environment()
 
-    # Set a higher recursion limit for AVL operations
     sys.setrecursionlimit(2_000_000)
 
-    # Run the full benchmarking process
     print("\nRunning benchmarks...")
     run_full_benchmark()
 

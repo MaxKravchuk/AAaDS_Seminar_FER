@@ -6,25 +6,18 @@ import matplotlib.pyplot as plt
 from avl_tree import AVLTree
 from b_tree import BTree
 import sys
-import json
 
 DATASET_DIR = "./dataset/"
 PLOTS_DIR = "./plots/"
 RESULTS_FILE = "benchmark_results.md"
 
-
 def ensure_directory_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-
 def generate_or_load_dataset(size):
-    """
-    Generate a random dataset of the given size or load it if already saved.
-    """
     ensure_directory_exists(DATASET_DIR)
     dataset_path = os.path.join(DATASET_DIR, f"dataset_{size}.txt")
-
     if os.path.exists(dataset_path):
         with open(dataset_path, "r") as f:
             data = list(map(int, f.read().strip().split()))
@@ -38,12 +31,6 @@ def generate_or_load_dataset(size):
 
 
 def measure_time_and_memory(func, *args, **kwargs):
-    """
-    Measure the execution time and memory usage of a function call.
-    Returns:
-      - time_elapsed: float (in seconds)
-      - mem_diff: float (in MB)
-    """
     mem_before = memory_profiler.memory_usage()[0]
     start_time = time.perf_counter()
 
@@ -59,10 +46,6 @@ def measure_time_and_memory(func, *args, **kwargs):
 
 
 def run_benchmark_for_size(n):
-    """
-    Run insert, search, and delete for both AVL and B-Tree for dataset of size n.
-    Returns a dictionary with timing and memory usage metrics.
-    """
     data = generate_or_load_dataset(n)
 
     avl = AVLTree()
@@ -127,9 +110,6 @@ def run_benchmark_for_size(n):
 
 
 def generate_plots(results):
-    """
-    Generate plots for time and memory complexity.
-    """
     ensure_directory_exists(PLOTS_DIR)
 
     sizes = [res["size"] for res in results]
@@ -164,9 +144,6 @@ def generate_plots(results):
 
 
 def save_results_to_markdown(results):
-    """
-    Save benchmark results to a markdown file, including memory usage data.
-    """
     with open(RESULTS_FILE, "w") as f:
         f.write("# Benchmark Results\n\n")
         f.write(
@@ -203,9 +180,6 @@ def save_results_to_markdown(results):
 
 
 def run_full_benchmark():
-    """
-    Run benchmarks for multiple dataset sizes, save results, and generate plots.
-    """
     dataset_sizes = [1_000, 5_000, 10_000, 50_000, 100_000, 500_000]
 
     results = []

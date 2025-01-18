@@ -5,13 +5,9 @@ import imageio.v2 as iio
 from PIL import Image
 import numpy as np
 from avl_tree import AVLTree
-from b_tree import BTree, BTreeNode
+from b_tree import BTreeNode
 
 def _render_avl_to_png(avl_tree, filename, search_path=None):
-    """
-    Render the current AVL tree to a PNG file (via Graphviz) at 'filename'.
-    If 'search_path' is provided (list of AVLNode objects), highlight edges on that path in green.
-    """
     dot = graphviz.Digraph(comment="AVL Tree (PNG output)")
     dot.graph_attr["size"] = "10,6!"
     dot.graph_attr["dpi"] = "100"
@@ -39,7 +35,6 @@ def _render_avl_to_png(avl_tree, filename, search_path=None):
     add_nodes_edges(avl_tree.root)
     dot.render(filename=filename, format="png", cleanup=True)
 
-
 def create_avl_insertion_gif(avl_tree, values_to_insert, output_gif="avl_insertion.gif", fps=2):
     frames_dir = "temp_avl_insert_frames"
     if os.path.exists(frames_dir):
@@ -63,7 +58,6 @@ def create_avl_insertion_gif(avl_tree, values_to_insert, output_gif="avl_inserti
 
     shutil.rmtree(frames_dir)
     print(f"[AVL Insertion GIF] Created '{output_gif}', then deleted {frames_dir}.")
-
 
 def create_avl_search_gif(avl_tree, values_to_search, output_gif="avl_search.gif", fps=2):
     frames_dir = "temp_avl_search_frames"
@@ -89,7 +83,6 @@ def create_avl_search_gif(avl_tree, values_to_search, output_gif="avl_search.gif
     shutil.rmtree(frames_dir)
     print(f"[AVL Search GIF] Created '{output_gif}', then deleted {frames_dir}.")
 
-
 def create_avl_deletion_gif(avl_tree, values_to_delete, output_gif="avl_deletion.gif", fps=2):
     frames_dir = "temp_avl_delete_frames"
     if os.path.exists(frames_dir):
@@ -114,13 +107,7 @@ def create_avl_deletion_gif(avl_tree, values_to_delete, output_gif="avl_deletion
     shutil.rmtree(frames_dir)
     print(f"[AVL Deletion GIF] Created '{output_gif}', then deleted {frames_dir}.")
 
-
 def _render_btree_to_png(btree, filename, search_path=None):
-    """
-    Render the current B-Tree to a PNG file via Graphviz.
-    If 'search_path' is a list of nodes, highlight edges
-    in green if both parent & child are on that path.
-    """
     dot = graphviz.Digraph(comment="B-Tree (PNG output)")
     dot.graph_attr["size"] = "10,6!"
     dot.graph_attr["dpi"] = "100"
@@ -129,25 +116,15 @@ def _render_btree_to_png(btree, filename, search_path=None):
     path_set = set(search_path) if search_path else set()
 
     def btree_node_label(node: BTreeNode):
-        """
-        Create a label for Graphviz "record" shape.
-        Example: | 10 | 20 | 30 |  (for 3 keys).
-        """
         keys_list = [str(node.keys[i]) for i in range(node.n)]
         return "|".join(keys_list)
 
     def add_nodes_edges(node, name_prefix="N"):
-        """
-        Recursively add this node and its children to the dot.
-        We'll identify each node with an ID string: "N{id(node)}"
-        """
         if not node:
             return
-
         node_id = f"{name_prefix}{id(node)}"
         label_text = btree_node_label(node)
         dot.node(node_id, label="{" + label_text + "}", shape="record")
-
         if node.leaf:
             return
         for i in range(node.n + 1):
@@ -161,7 +138,6 @@ def _render_btree_to_png(btree, filename, search_path=None):
                 add_nodes_edges(child, name_prefix)
     add_nodes_edges(btree.root)
     dot.render(filename=filename, format="png", cleanup=True)
-
 
 def create_btree_insertion_gif(btree, values_to_insert, output_gif="btree_insertion.gif", fps=2):
     frames_dir = "temp_btree_insert_frames"
@@ -187,11 +163,7 @@ def create_btree_insertion_gif(btree, values_to_insert, output_gif="btree_insert
     shutil.rmtree(frames_dir)
     print(f"[B-Tree Insertion GIF] Created '{output_gif}', then deleted {frames_dir}.")
 
-
 def create_btree_search_gif(btree, values_to_search, output_gif="btree_search.gif", fps=2):
-    """
-    Highlight in green the path of nodes visited during search.
-    """
     frames_dir = "temp_btree_search_frames"
     if os.path.exists(frames_dir):
         shutil.rmtree(frames_dir)
@@ -214,7 +186,6 @@ def create_btree_search_gif(btree, values_to_search, output_gif="btree_search.gi
 
     shutil.rmtree(frames_dir)
     print(f"[B-Tree Search GIF] Created '{output_gif}', then deleted {frames_dir}.")
-
 
 def create_btree_deletion_gif(btree, values_to_delete, output_gif="btree_deletion.gif", fps=2):
     frames_dir = "temp_btree_delete_frames"
@@ -239,7 +210,6 @@ def create_btree_deletion_gif(btree, values_to_delete, output_gif="btree_deletio
 
     shutil.rmtree(frames_dir)
     print(f"[B-Tree Deletion GIF] Created '{output_gif}', then deleted {frames_dir}.")
-
 
 def main():
 

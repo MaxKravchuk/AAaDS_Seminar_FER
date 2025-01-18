@@ -148,13 +148,11 @@ class BTree:
             self._delete_internal(node.children[idx], k)
 
     def _get_predecessor(self, node: BTreeNode):
-        """Find the largest key in the subtree rooted at 'node'."""
         while not node.leaf:
             node = node.children[node.n]
         return node.keys[node.n - 1]
 
     def _get_successor(self, node: BTreeNode):
-        """Find the smallest key in the subtree rooted at 'node'."""
         while not node.leaf:
             node = node.children[0]
         return node.keys[0]
