@@ -1,11 +1,6 @@
-# requirements.txt
-
-# Graphviz (Python package) for tree visualization
-# 0.20+ supports Python 3.11. If you experience issues, try removing version constraints.
-graphviz>=0.20.1
-
-# NumPy 1.23+ supports Python 3.11. Consider 1.24+ if you want a newer release.
-numpy>=1.23
-
-# Matplotlib 3.6+ supports Python 3.11. Used for optional performance plots.
-matplotlib>=3.6
+graphviz==0.20.3
+imageio==2.36.1
+matplotlib==3.10.0
+memory_profiler==0.61.0
+numpy==1.25.2
+Pillow==11.1.0
